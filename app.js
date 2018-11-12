@@ -2,6 +2,8 @@ var express = require("express");
 var server = express();
 var mongoose = require("mongoose");
 var bodyParser = require('body-parser');
+var db;
+
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));             //converting to json.
@@ -12,10 +14,26 @@ var port = 3000;
 server.use("/", (req, res) => {
     res.sendFile("H:/DSI pro's/reg from and review/DB/main.html");          //displaying html
     console.log("the html file has been sent..");
-    
 });
 
-mongoose.Promise = global.Promise;mongoose.connect("mongodb://localhost:3000/db");      //connecting to db
+//mongoose.Promise = global.Promise;mongoose.connect("mongodb://localhost:3000/db");      //connecting to db
+//mongoose.Promise = global.Promise;mongoose.connect('mongodb://localhost:3000/db', { useNewUrlParser: true });
+//mongoose.Promise = global.Promise;MongoClient.connect("mongodb://localhost:3000/db", {useNewUrlParser: true } );
+
+
+
+db.mongoConnect = () => {
+    mongoose.Promise = global.Promise
+    mongoose.connect("mongodb://localhost:3000/db", {useNewUrlParser: true})
+    mongo.then(() => {
+    console.log('mongoDB is connected...');
+    })
+    .catch((err) => {
+    throw err
+    })
+    }
+
+
 
 var nameSchema = new mongoose.Schema({                      //creating schema..
     Name: String,
@@ -37,6 +55,7 @@ server.post("/submit", (req, res) => {
     myData.save()
     .then(item => {
     res.send("item saved to database");
+    console.log("DATA STORED ");
     })
     .catch(err => {
     res.status(400).send("unable to save to database");
