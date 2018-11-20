@@ -21,18 +21,25 @@ server.use("/", (req, res) => {
 //mongoose.Promise = global.Promise;mongoose.connect('mongodb://localhost:3000/db', { useNewUrlParser: true });
 //mongoose.Promise = global.Promise;MongoClient.connect("mongodb://localhost:3000/db", {useNewUrlParser: true } );
 
+mongoose.connect("mongodb://localhost:27017/database", { useNewUrlParser: true }).then(()=>{
+    console.log("Connected to database ");
+}
+)
+.catch(err =>{
+    console.log("Couldnt connect .. !");
+    
+});
 
-
-db.mongoConnect = () => {
-    mongoose.Promise = global.Promise
-    mongoose.connect("mongodb://localhost:27017/database", {useNewUrlParser: true})
-    mongo.then(() => {
-    console.log('mongoDB is connected...');
-    })
-    .catch((err) => {
-    throw err
-    })
-    }
+// db.mongoConnect = () => {
+//     mongoose.Promise = global.Promise
+//     mongoose.connect("mongodb://localhost:27017/database", {useNewUrlParser: true})
+//     mongo.then(() => {
+//     console.log('mongoDB is connected...');
+//     })
+//     .catch((err) => {
+//     throw err
+//     })
+//     }
 
 
 
